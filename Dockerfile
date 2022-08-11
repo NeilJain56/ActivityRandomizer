@@ -1,31 +1,31 @@
-#FROM ubuntu:22.04
-#
-# RUN apt-get update -y
-# RUN apt-get install -y python3-pip
-# COPY ./backend/ /backend
-# WORKDIR /backend
-# COPY ./requirements.txt /backend/requirements.txt
-# RUN pip install -r requirements.txt
-# COPY . .
-# EXPOSE 3000
-# ENTRYPOINT ["/backend/__init__.py"]
-# CMD ["flask", "run"]
-
+# docker image pulling from docker hub
 FROM python:3.10
+
 LABEL Author="Neil Jain"
 
+# setup environment variables
 ENV FLASK_APP "backend/app.py"
 
+# make directory on container computer
 RUN mkdir /app
+
+# set the working directory (directory where the app is)
 WORKDIR /app
 
+# install pip
 RUN pip install --upgrade pip
 
+# move requirements.txt to container computer so we can run pip install
 COPY requirements.txt requirements.txt
+
+
 RUN pip install -r requirements.txt
 
+# move all other project files to /app directory in container
 ADD . /app
 
+# expose functionality of app on port 5000
 EXPOSE 5000
 
+# command to run the app
 CMD flask run --host=0.0.0.0
