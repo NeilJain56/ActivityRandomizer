@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Deployment
+metadata:
+    name: ActivityRandomizerBackend-deployment
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: ActivityRandomizerBackend
+    template:
+        metadata:
+            labels:
+                app: ActivityRandomizerBackend
+    spec:
+        containers:
+        - name: backend-container
+        image: gcr.io/activityrandomizer-359101/docker-flask-api
+        ports:
+        - containerPort: 5000
+        env:
+        - name: PORT
+        value: "5000"
